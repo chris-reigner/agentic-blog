@@ -1,0 +1,13 @@
+---
+# Project yamllint rules: relaxed to fit small, comment-headed config files.
+extends: default
+
+rules:
+  document-start: disable        # config files need no leading '---'
+  line-length:
+    max: 120
+    level: warning
+  comments:
+    min-spaces-from-content: 1
+  truthy:
+    check-keys: false            # allow on/off style booleans in config

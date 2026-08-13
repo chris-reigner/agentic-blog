@@ -1,0 +1,50 @@
+# Single source of truth for all tunables. One top-level key per silo.
+# Secrets (LLM_API_KEY) come from the environment only, never from here.
+
+pipeline:
+  max_critique_iterations: 3
+  approval_threshold: 8       # critic score (0-10) at/above which a draft is approved
+  novelty_window_days: 14     # topics covered within this window get a novelty penalty
+  output_root: ./output       # per-topic directories are created here
+
+llm:
+  # Local Ollama (OpenAI-compatible endpoint). No API key needed for localhost.
+  base_url: http://localhost:11434/v1
+  model: gpt-oss:20b
+  temperature: 0.3
+  timeout_seconds: 600        # local models are slow; give them room
+  debate_model: null          # falls back to `model` when null
+  # OpenRouter attribution headers (ignored by other OpenAI-compatible backends)
+  openrouter_site_url: https://github.com/chris-reigner/agentic-blog
+  openrouter_app_name: agentic-blog
+
+render:
+  # Which renderers `run`/`render` produce when no --render flag is given.
+  # Required — choose any of: markdown, blog, linkedin, skill.
+  kinds: [markdown, blog, linkedin, skill]
+  # `compression` drives how hard each renderer squeezes the shared Knowledge
+  # object (low = full prose, high = terse).
+  markdown:
+    compression: low
+  blog:
+    compression: medium
+    target_words: 1100
+    seo: true
+  linkedin:
+    compression: high
+    hashtags: 3
+  skill:
+    compression: structural
+    skill_md_max_tokens: 4000
+    chapter_budget_tokens: 1200
+
+memory:
+  backend: markdown           # markdown | knowledge_base
+  novelty_window_days: 14
+  max_lessons_injected: 5     # top-weighted lessons re-injected into the writer
+
+debate:
+  # Optional multi-persona debate panel in the distillation critic loop.
+  enabled: true               # --debate on the CLI flips this on for a run
+  num_personas: 3
+  rounds: 2
