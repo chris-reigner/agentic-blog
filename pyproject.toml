@@ -7,7 +7,7 @@ name = "agentic-blog"
 version = "1.0.0"
 description = "Distil a source of knowledge once, then render it many ways (markdown, blog, linkedin, agent skill)."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 license = { text = "MIT" }
 dependencies = [
     "pydantic>=2.0",
@@ -58,7 +58,7 @@ packages = ["src/agentic_blog"]
 
 # ── Ruff ──────────────────────────────────────────────────────────────────────
 [tool.ruff]
-target-version = "py310"
+target-version = "py312"
 line-length = 100
 src = ["src", "tests"]
 
@@ -73,7 +73,7 @@ ignore = ["E501"]  # line length handled by formatter
 
 # ── Mypy ──────────────────────────────────────────────────────────────────────
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 strict = true
 warn_unused_configs = true
 files = ["src/agentic_blog"]
@@ -85,8 +85,8 @@ module = [
 ]
 ignore_missing_imports = true
 
-# numpy ships stubs written in 3.12+ `type` syntax; don't parse them under our
-# 3.10 target (the code never types against numpy — it arrives via extractors).
+# The code never types against numpy (it arrives via optional extractors), so
+# skip its stubs rather than resolve them.
 [[tool.mypy.overrides]]
 module = ["numpy.*"]
 follow_imports = "skip"

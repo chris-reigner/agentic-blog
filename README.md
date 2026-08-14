@@ -69,15 +69,11 @@ make check     # all three (what CI runs)
 
 ## Backlog
 
-- Test clean all 
+- Test clean all
 - Improve rendering artefacts to specific format
 - Test parsers for multiple sources
 - Add images parsers to keep important images
 - Improve critics behaviour
 - Improve memory optimization
-- create plugin
+- create plugin for claude code
 - test with ml-engineering for grpo skills
-
-## License
-
-MIT.
