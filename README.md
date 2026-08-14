@@ -69,7 +69,7 @@ make check     # all three (what CI runs)
 
 ## Backlog
 
-- Test clean all 
+- Test clean all
 - Improve rendering artefacts to specific format
 - Test parsers for multiple sources
 - Add images parsers to keep important images
