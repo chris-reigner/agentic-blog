@@ -1,0 +1,42 @@
+name: "✨ Feature Request"
+description: Propose a new capability or enhancement.
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: The motivation / use case, not the implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: Impact area
+      options:
+        - label: Ingest
+        - label: Distill
+        - label: Render
+        - label: Memory
+        - label: CLI
+        - label: Docs
+        - label: CI/CD
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+    validations:
+      required: false

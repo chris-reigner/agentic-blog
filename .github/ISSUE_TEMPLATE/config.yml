@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Design & architecture
+    url: https://github.com/chris-reigner/agentic-blog/blob/main/DESIGN.md
+    about: Read the design doc before proposing large architectural changes.
+  - name: Contributing workflow
+    url: https://github.com/chris-reigner/agentic-blog/blob/main/README.md
+    about: How to set up the repo, run make check, and open a PR.
