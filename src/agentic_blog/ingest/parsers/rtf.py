@@ -18,7 +18,7 @@ def _with_striprtf(raw: str) -> str | None:
     except ImportError:
         return None
     try:
-        return str(rtf_to_text(raw))
+        return str(rtf_to_text(raw))  # type: ignore[no-untyped-call]
     except Exception:
         return None
 
