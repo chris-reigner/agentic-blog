@@ -67,6 +67,37 @@ make test      # pytest + coverage
 make check     # all three (what CI runs)
 ```
 
+## Contributing
+
+Changes reach `main` **only through a Pull Request** — direct pushes are not the
+workflow. Open a PR, let CI pass, then **squash-merge**.
+
+**What CI checks** on every PR (`.github/workflows/ci.yml`):
+
+- **Pre-commit** — ruff (lint + format), mypy `--strict`, yamllint, whitespace/EOF.
+- **Tests** — `pytest` with coverage on Python 3.12.
+
+Run the same gate locally before pushing: `make check`.
+
+**Releases are automated** by [python-semantic-release](https://python-semantic-release.readthedocs.io/)
+on merge to `main`, driven by the **PR title** (which becomes the squash commit).
+Use [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `fix: ...` → patch (`1.0.0` → `1.0.1`)
+- `feat: ...` → minor (`1.0.0` → `1.1.0`)
+- `feat!: ...` or a `BREAKING CHANGE:` footer → major (`1.0.0` → `2.0.0`)
+- `docs: ` / `refactor: ` / `test: ` / `chore: ` / `ci: ` → no release
+
+On a releasing merge, the release workflow bumps the version, tags `vX.Y.Z`,
+creates the GitHub Release with the built wheel + sdist, and deploys the docs.
+Useful local commands:
+
+```bash
+uv run semantic-release version --print            # next version it would cut
+uv run semantic-release version --print-last-released  # current baseline (from tags)
+uv run semantic-release -v version --noop          # full dry-run, changes nothing
+```
+
 ## Backlog
 
 - Test clean all
