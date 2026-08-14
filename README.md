@@ -75,9 +75,5 @@ make check     # all three (what CI runs)
 - Add images parsers to keep important images
 - Improve critics behaviour
 - Improve memory optimization
-- create plugin
+- create plugin for claude code
 - test with ml-engineering for grpo skills
-
-## License
-
-MIT.
