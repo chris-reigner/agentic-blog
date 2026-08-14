@@ -40,21 +40,26 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          NEXT="$(uv run semantic-release version --print)"
-          if [ -z "${NEXT}" ]; then
-            echo "No release required."
-            echo "released=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Releasing version ${NEXT}"
+          # `version --print` returns the *last* released version even when no
+          # bump is due, so it can't signal "did we release". Compare the last
+          # released version before and after instead.
+          BEFORE="$(uv run semantic-release version --print-last-released || true)"
           uv run semantic-release -v version
-          echo "released=true" >> "$GITHUB_OUTPUT"
-          echo "version=${NEXT}" >> "$GITHUB_OUTPUT"
-      - name: Upload build artifacts to the GitHub Release
+          AFTER="$(uv run semantic-release version --print-last-released || true)"
+          if [ -n "${AFTER}" ] && [ "${BEFORE}" != "${AFTER}" ]; then
+            echo "Released ${AFTER}"
+            echo "released=true" >> "$GITHUB_OUTPUT"
+            echo "version=${AFTER}" >> "$GITHUB_OUTPUT"
+          else
+            echo "No release required (last released: ${AFTER:-none})."
+            echo "released=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Attach build artifacts to the GitHub Release
         if: ${{ steps.release.outputs.released == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          uv build
           gh release upload "v${{ steps.release.outputs.version }}" dist/*.whl dist/*.tar.gz --clobber
 
   docs:
