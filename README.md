@@ -102,7 +102,6 @@ uv run semantic-release -v version --noop          # full dry-run, changes nothi
 
 - Test clean all
 - Improve rendering artefacts to specific format
-- Test parsers for multiple sources
 - Add images parsers to keep important images
 - Improve critics behaviour
 - Improve memory optimization
